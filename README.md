@@ -1,1 +1,2 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/dw86vie8f122ft7e?svg=true)](https://ci.appveyor.com/project/Krasyulia/patterns1)
+[![Build status](https://ci.appveyor.com/api/projects/status/biu909pw1f4e6dss?svg=true)](https://ci.appveyor.com/project/Krasyulia/patterns-allure)
+

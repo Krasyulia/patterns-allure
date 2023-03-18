@@ -2,6 +2,9 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
@@ -11,13 +14,43 @@ import java.util.Locale;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import com.google.common.io.Files;
+import io.qameta.allure.Attachment;
+
+import java.io.File;
+import java.io.IOException;
+import com.codeborne.selenide.Screenshots;
+
 public class CardDeliveryTest {
+
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(true));
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("AllureSelenide");
+    }
     @BeforeEach
     void setupTest() {
         Configuration.holdBrowserOpen = true;
         open("http://localhost:9999/");
         Faker faker = new Faker(new Locale("ru"));
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.chord(Keys.BACK_SPACE));
+    }
+
+    @AfterEach
+    public void tearDown() throws IOException {
+        screenshot();
+    }
+
+    @Attachment(type = "image/png")
+    public byte[] screenshot() throws IOException {
+        File screenshot = Screenshots.getLastScreenshot();
+        return screenshot == null ? null : Files.toByteArray(screenshot);
     }
 
     String dateByClient = DataGenerator.date(3);

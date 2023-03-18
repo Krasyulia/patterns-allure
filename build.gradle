@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id "io.freefair.lombok" version "5.2.1"
+    id 'io.qameta.allure' version '2.9.6'
 }
 
 group 'ru.netology'
@@ -23,6 +24,8 @@ dependencies {
     implementation 'com.github.javafaker:javafaker:1.0.2'
     testImplementation 'io.rest-assured:rest-assured:4.3.0'
     testImplementation 'com.google.code.gson:gson:2.8.6'
+    implementation group: 'org.apache.poi', name: 'poi', version: '3.11'
+    testImplementation 'io.qameta.allure:allure-selenide:2.16.1'
 }
 
 test {
